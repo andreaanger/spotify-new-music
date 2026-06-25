@@ -1,0 +1,28 @@
+name: Run Weekly Spotify New Music Python Script
+
+on:
+  schedule:
+    # Runs at 00:23 UTC every Friday
+    - cron: '23 7 * * 5'
+  workflow_dispatch: # Allows you to manually trigger the script from the Actions tab
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Execute Python script
+      run: python main.py
