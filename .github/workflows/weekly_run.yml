@@ -24,5 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Execute Python script
+    - name: Execute Python script with Envs
+      env:
+        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        SPOTIFY_REDIRECT_URI: ${{ secrets.SPOTIFY_REDIRECT_URI }}
+        SPOTIFY_PLAYLIST_NAME: ${{ secrets.SPOTIFY_PLAYLIST_NAME }}
+        NEW_MUSIC_DAYS_THRESHOLD: ${{ secrets.NEW_MUSIC_DAYS_THRESHOLD }}
       run: python main.py
