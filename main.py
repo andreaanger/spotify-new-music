@@ -30,6 +30,7 @@ class Settings:
     client_id: str
     client_secret: str
     redirect_uri: str
+    cache_path: str
     playlist_name: str = "HAWT NU MUZIC"
     new_music_days_threshold: int = 7
     output_dir: Path = Path("output")
@@ -42,6 +43,7 @@ def load_settings() -> Settings:
     client_id = os.environ.get("SPOTIFY_CLIENT_ID", "").strip()
     client_secret = os.environ.get("SPOTIFY_CLIENT_SECRET", "").strip()
     redirect_uri = os.environ.get("SPOTIFY_REDIRECT_URI", "").strip()
+    cache_path = os.environ.get("SPOTIFY_CACHE_PATH", "").strip()
 
     missing = [
         name
@@ -49,6 +51,7 @@ def load_settings() -> Settings:
             "SPOTIFY_CLIENT_ID": client_id,
             "SPOTIFY_CLIENT_SECRET": client_secret,
             "SPOTIFY_REDIRECT_URI": redirect_uri,
+            "SPOTIFY_CACHE_PATH": cache_path,
         }.items()
         if not value
     ]
@@ -67,6 +70,7 @@ def load_settings() -> Settings:
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
+        cache_path=cache_path,
         playlist_name=playlist_name,
         new_music_days_threshold=threshold,
     )
@@ -88,6 +92,7 @@ def authorize(settings: Settings) -> spotipy.Spotify:
             client_id=settings.client_id,
             client_secret=settings.client_secret,
             redirect_uri=settings.redirect_uri,
+            cache_path=settings.cache_path,
             scope=SPOTIFY_SCOPE,
         )
     )
